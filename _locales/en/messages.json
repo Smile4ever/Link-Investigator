@@ -1,0 +1,66 @@
+{
+	"extensionName": { "message": "Link Investigator" },
+	"extensionDescription": { "message": "Investigates the HTTP status of links in a webpage, selection or link." },
+	"menuPage": { "message": "Investigate all links" },
+	"menuSelection": { "message": "Investigate the links in the selection" },
+	"menuLink": { "message": "Investigate this link" },
+
+	"settingsLabel": { "message": "Configuration" },
+	"statisticsLabel": { "message": "Statistics" },
+	"informationLabel": { "message": "Information" },
+	"generalLabel": { "message": "General" },
+
+	"showStatsLabel": { "message": "Show statistics after analysis" },
+	"showStatsCaptionLabel": { "message": "When finished, open a popup window with the results of the analysis. The popup is shown only when there is one of these categories detected: broken, invalid or timeout." },
+	"hideStatsAfterLabel": { "message": "Hide statistics automatically" },
+	"hideStatsAfterCaptionLabel": { "message": "Hide statistics after a defined amount of seconds. Use 0 to disable this setting." },
+	"highlightedLinksLabel": { "message": "Highlight color for analyzed links" },
+	"linksFineLabel": { "message": "Fine Links" },
+	"linksFineCaptionLabel": { "message": "Color to highlight links that work." },
+	"linksBrokenLabel": { "message": "Broken Links" },
+	"linksBrokenCaptionLabel": { "message": "Color to highlight broken links." },
+	"linksTimeOutLabel": { "message": "Timed Out Links" },
+	"linksTimeOutCaptionLabel": { "message": "Color to highlight links that didn't return any headers for a long time" },
+	"linksSkippedLabel": { "message": "Skipped links" },
+	"linkSkippedCaptionLabel": { "message": "Highlight color for links that weren't analyzed" },
+	"linksInvalidLabel": { "message": "Invalid Links" },
+	"linksInvalidCaptionLabel": { "message": "Highlight color for links that returned header, but it wasn't http/https header"},
+	"secondsTimeOutLabel": { "message": "Time-out (in seconds)" },
+	"secondsTimeOutCaptionLabel": { "message": "Links that take longer than the defined threshold are being considered as timed out" },
+
+	"advancedLabel": { "message": "Advanced" },
+	"whatTagsShouldCheckLabel": { "message": "HTML tags to be analyzed" },
+	"anchorLabel": { "message": "Anchor" },
+	"optionLabel": { "message": "Option" },
+	"areaLabel": { "message": "Area" },
+	"hintsToRecognizeLabel": { "message": "Skip links containing" },
+	"hintsToRecognizeCaptionLabel": { "message": "Separate by ','" },
+
+	"versionLabel": { "message": "Version" },
+	"licenseLabel": { "message": "License" },
+	"licenseCaptionLabel": { "message": "GNU General Public License 2.0+" },
+	"donationLabel": { "message": "Please make a donation" },
+	"donationCaptionLabel": { "message": "Thank you for using Link Investigator.<br>Your support will be a big encouragement, as I continue to develop the add-on.<br>If you like Link Investigator, I would be pleased if you could consider donating." },
+	"addonPageLabel": { "message": "Add-on page" },
+	"addonUrl": {
+		 "message": "https:\/\/addons.mozilla.org\/firefox\/addon\/link-investigator\/?src=optionpage"
+	 },
+	"errorCheck": { "message": "Link Investigator failed" },
+	"about": { "message": "About" },
+	"amo":	{ "message": "Firefox restricts some functions on some URLs" },
+	"error": { "message": "There was an error with the operation" },
+	"help": { "message": "Help" },
+
+	"testDuration": { "message": "Analysis duration" },
+	"linksFinePopup": { "message": "The link returned a code between 200 and 300, meaning it's ok." },
+	"linksBrokenPopup": { "message": "The link returned code was either 404, or some of other 'can't get here'." },
+	"linksTimeOutPopup": { "message": "The link has {secondsTimeOut} seconds to open and return header. But one didn't make it." },
+	"linksInvalidPopup": { "message": "The link didn't return any valid header. Either is server down, or it's redirecting to protocols others than not valid." },
+	"linksSkippedPopup": { "message": "The link wasn't tested. It can be either anchor to this page (#), or JavaScript, etc..." },
+
+	"browserButtonTitle": { "message": "Link Investigator - Click to check the current page" },
+
+	"seconds": { "message": "seconds" },
+	"dead": { "message": "dead" },
+	"skipped": { "message": "skipped" }
+}

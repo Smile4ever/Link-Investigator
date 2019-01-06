@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="options.css">
+    <title>Link Investigator</title>
+    <link rel="icon" type="image/png" href="../icons/link-investigator-64.png" sizes="64x64">
+    <link rel="icon" type="image/png" href="../icons/link-investigator-256.png" sizes="256x256">
+  </head>
+
+  <body>
+    <div id="sidebar">
+      <ul>
+        <li>
+          <div class="titleContainer">
+            <img src="../icons/link-investigator-64.png" class="logo" width="64px" height="64px">
+            <span class="logotitle">Link Investigator</span>
+          </div>
+        </li>
+        <li>
+          <a href="#settings">
+            <span class="selected sidebarItem settingsLabel">Configuration</span>
+          </a>
+        </li>
+        <li>
+          <a href="#information">
+            <span class="sidebarItem informationLabel">Information</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div id="contents">
+      <div id="settings" style="display:none">
+        <p class="contentTitle settingsLabel">Configuration</p>
+        <hr>
+        <ul>
+          <li class="categoryContainer">
+            <div class="categoryTitle">
+              <p class="generalLabel">General</p>
+            </div>
+            <ul class="categoryElements">
+              <li class="optionContainer">
+                <div class="optionText">
+					<p class="statisticsLabel">Statistics</p>
+                </div>
+              </li>
+			  <ul class="childElements">
+				 <li class="optionContainer">
+                  <div class="optionText">
+                    <p class="showStatsLabel">Show statistics after analysis</p>
+					<p class="caption showStatsCaptionLabel">When finished, open a popup window with the results of the analysis. The popup is shown only when there is one of these categories detected: broken, invalid or timeout.</p>
+                  </div>
+                  <div class="optionForm">
+                    <label>
+                      <input id="showStats" class="saveByChange" type="checkbox">
+                      <span class="checkbox"></span>
+                    </label>
+                  </div>
+                </li>
+				 <li class="optionContainer">
+                  <div class="optionText">
+                    <p class="hideStatsAfterLabel">Automatically hide statistics</p>
+                    <p class="caption hideStatsAfterCaptionLabel">Hide statistics after a defined amount of seconds. Use 0 to disable this setting.</p>
+                  </div>
+                  <div class="optionForm">
+                    <label>
+                      <input id="hideStatsAfter" class="saveByChange" type="number" value="0">
+                    </label>
+                  </div>
+                </li>
+			  </ul>
+              <li class="optionContainer">
+                <div class="optionText">
+                  <p class="highlightedLinksLabel">Highlight color for analyzed links</p>
+                </div>
+              </li>
+              <ul class="childElements">
+                <li class="optionContainer">
+                  <div class="optionText">
+                    <p class="linksFineLabel">Fine links</p>
+                    <p class="caption linksFineCaptionLabel">Color to highlight links that work.</p>
+                  </div>
+                  <div class="optionForm">
+                    <label>
+                      <input id="linkFine" class="saveByChange" type="color" value="#B2FFB7">
+                    </label>
+                  </div>
+                </li>
+                <li class="optionContainer">
+                  <div class="optionText">
+                    <p class="linksBrokenLabel">Broken links</p>
+                    <p class="caption linksBrokenCaptionLabel">Color to highlight broken links.</p>
+                  </div>
+                  <div class="optionForm">
+                    <label>
+                      <input id="linkBroken" class="saveByChange" type="color" value="#CC0000">
+                    </label>
+                  </div>
+                </li>
+                <li class="optionContainer">
+                  <div class="optionText">
+                    <p class="linksTimeOutLabel">Time out links</p>
+                    <p class="caption linksTimeOutCaptionLabel">Color to highlight links that didn't return any headers for a long time</p>
+                  </div>
+                  <div class="optionForm">
+                    <label>
+                      <input id="linkTimeOut" class="saveByChange" type="color" value="#FFCC99">
+                    </label>
+                  </div>
+                </li>
+                <li class="optionContainer">
+                  <div class="optionText">
+                    <p class="linksSkippedLabel">Skipped links</p>
+                    <p class="caption linksSkippedCaptionLabel">Color for highlighting links weren't analyzed</p>
+                  </div>
+                  <div class="optionForm">
+                    <label>
+                      <input id="linkSkipped" class="saveByChange" type="color" value="#CCCCCC">
+                    </label>
+                  </div>
+                </li>
+                <li class="optionContainer">
+                  <div class="optionText">
+                    <p class="linksInvalidLabel">Invalid links</p>
+                    <p class="caption linksInvalidCaptionLabel">Highlight color for links that returned header, but it wasn't http/https header</p>
+                  </div>
+                  <div class="optionForm">
+                    <label>
+                      <input id="linkInvalid" class="saveByChange" type="color" value="#999900">
+                    </label>
+                  </div>
+                </li>
+              </ul>
+              <hr>
+          </ul>
+      </ul>
+    </li>
+    <hr>
+    <li class="categoryContainer">
+      <div class="categoryTitle">
+        <p class="advancedLabel">Advanced</p>
+      </div>
+		
+      <ul class="categoryElements">
+		 <li class="optionContainer">
+		  <div class="optionText">
+			<p class="secondsTimeOutLabel">Time-out (in seconds)</p>
+			<p class="caption secondsTimeOutCaptionLabel">Links that take longer than the defined threshold are being considered as timed out</p>
+		  </div>
+		  <div class="optionForm">
+			<label>
+			  <input id="secondsTimeOut" class="saveByChange" type="number" value="45" min="1" max="120" placeholder="22">
+			</label>
+		  </div>
+		</li>
+		
+        <li class="optionContainer">
+          <div class="optionText">
+            <p class="whatTagsShouldCheckLabel">HTML tags to be analyzed</p>
+          </div>
+        </li>
+        <ul class="childElements">
+          <li class="optionContainer">
+            <div class="optionText">
+              <p class="anchorLabel">Anchor</p>
+            </div>
+            <div class="optionForm">
+              <label>
+                <input type="checkbox" id="checkAnchor" class="saveByChange" checked="checked">
+                <span class="checkbox"></span>
+              </label>
+            </div>
+          </li>
+          <li class="optionContainer">
+            <div class="optionText">
+              <p class="optionLabel">Option</p>
+            </div>
+            <div class="optionForm">
+              <label>
+                <input type="checkbox" id="checkOption" class="saveByChange" checked="checked">
+                <span class="checkbox"></span>
+              </label>
+            </div>
+          </li>
+          <li class="optionContainer">
+            <div class="optionText">
+              <p class="areaLabel">Area</p>
+            </div>
+            <div class="optionForm">
+              <label>
+                <input type="checkbox" id="checkArea" class="saveByChange" checked="checked">
+                <span class="checkbox"></span>
+              </label>
+            </div>
+          </li>
+        </ul>
+
+        <br>
+
+      <li class="optionContainer">
+        <div class="optionText">
+          <p class="hintsToRecognizeLabel">Skip links containing</p>
+          <p class="caption hintsToRecognizeCaptionLabel">Separate by ','</p>
+        </div>
+        <div class="optionForm">
+          <!-- Element is below the option -->
+        </div>
+      </li>
+      
+      <textarea id="hintsToRecognize" class="saveByChange" value="logoff,logout,signoff"></textarea>
+
+    </ul>
+  </li>
+
+</ul>
+</div>
+
+<div id="information" style="display:none">
+<p class="contentTitle informationLabel">Information</p>
+<hr>
+<ul>
+  <li>
+    <div class="optionContainer">
+      <div class="optionText">
+        <p>Link Investigator</p>
+        <p class="caption">
+          <a class="pageLink" href="https://github.com/Smile4ever/link-investigator/releases" target="_blank">
+            <span class="versionLabel">Version</span> 1.0.0</a>
+        </p>
+      </div>
+    </div>
+  </li>
+  <li>
+    <div class="optionContainer">
+      <div class="optionText">
+        <p class="licenseLabel">License</p>
+        <p class="caption licenseCaptionLabel">GNU General Public License 2.0+</p>
+    </div>
+  </li>
+
+  <hr>
+
+  <li>
+    <div class="optionContainer">
+      <div class="optionText">
+        <p class="donationLabel">Please make a donation</p>
+        <p class="caption donationCaptionLabel">Thank you for using Link Investigator.
+          <br>Your support will be a big encouragement, as I continue to develop the add-on.
+          <br>If you like Link Investigator, I would be pleased if you could consider donating.</p>
+      </div>
+    </div>
+  </li>
+
+  <li>
+    <div class="optionContainer">
+      <div class="optionText">
+        <a href="https://www.paypal.me/Smile4ever/5eur" target="_blank">
+          <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" alt="Donate">
+        </a>
+      </div>
+    </div>
+  </li>
+
+  <hr>
+
+  <li>
+    <div class="optionContainer">
+      <div class="optionText">
+        <a class="pageLink addonUrl" href="https://addons.mozilla.org/firefox/addon/link-analyzer/" target="_blank">
+          <span class="addonPageLabel pageLink">Add-on page</span>
+        </a>
+        <a class="pageLink" href="https://github.com/Smile4ever/link-investigator" target="_blank">
+          <span class="pageLink">GitHub</span>
+        </a>
+      </div>
+    </div>
+  </li>
+
+</ul>
+</div>
+</div>
+
+<script type="text/javascript" src="settings.js"></script>
+<script type="text/javascript" src="options.js"></script>
+<script type="text/javascript" src="tm.hash-observer.js"></script>
+<script type="text/javascript" src="ui.js"></script>
+
+</body>
+
+</html>

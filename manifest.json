@@ -1,0 +1,53 @@
+{
+	"manifest_version": 2,
+	"name": "__MSG_extensionName__",
+	"description": "__MSG_extensionDescription__",
+	"author": "Geoffrey De Belie",
+	"version": "1.0.0",
+	"homepage_url": "https://github.com/Smile4ever/link-investigator",
+	"applications": {
+		"gecko": {
+			"id": "link-investigator@itsafeature.org"
+		}
+	},
+	"icons": {
+		"64": "icons/link-investigator-64.png",
+		"512": "icons/link-investigator-512.png"
+	},
+	"permissions": [
+		"<all_urls>",
+		"contextMenus",
+		"notifications",
+		"storage"
+	],
+	"background": {
+		"scripts": [
+			"background/background-script.js"
+		]
+	},
+	"content_scripts": [{
+		"matches": ["<all_urls>"],
+		"js": ["content/investigator.js"]
+	}],
+	"options_ui": {
+		"page": "options/options.html",
+		"open_in_tab": true
+	},
+	"commands": {
+		"check-page": {
+			"suggested_key": {
+				"default": "F4"
+			}
+		},
+		"check-selection": {
+			"suggested_key": {
+				"default": "Shift+F4"
+			}
+		}
+	},
+	"default_locale": "en",
+	"browser_action": {
+		"default_icon": "icons/link-investigator-512.png",
+		"browser_style": true
+	}
+}
