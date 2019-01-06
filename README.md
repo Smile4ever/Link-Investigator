@@ -35,7 +35,7 @@ Some links are not checked, these include JavaScript URLs by default, and links 
 ### Notes about the link context
 The "link" context doesn't know which link you clicked, only the URL that was associated with that link. As such, it can happen that multiple elements on the page with the same URL are highlighted while you expect only one element to be highlighted.
 
-# Localisation
+## Localisation
 Feel free to translate Link Investigator into your own language and submit a pull request. If you need help with this, open an issue on GitHub and I'll be glad to assist you.
 
 These languages are already translated:
@@ -43,12 +43,12 @@ These languages are already translated:
 * English
 * Galician (Galego)
 
-# Related addons
+## Related addons
 * https://addons.mozilla.org/addon/get-archive to retrieve (alive) archived versions for dead links using Internet Archive among other digital archival services
 
-# Support and development
-## Support assistance
+## Support and development
+### Support assistance
 If you notice there are bugs in Link Investigator, open an issue and let me know about it.
 
-## Support the development
+### Support the development
 If you want to support my work, you're most welcome to send me a donation: https://paypal.me/Smile4ever

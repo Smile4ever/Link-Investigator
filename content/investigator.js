@@ -143,6 +143,10 @@ linkAnalyzer = {
 	// this function is called on every link, option, area .. 
 	// if goes through our 'omit list' - see preferences and return false if this link should be omited
 	omit: function (a) {
+		if(linkAnalyzer.pref.hintsToRecognize == "" || linkAnalyzer.pref.hintsToRecognize == null){
+			return true;
+		}
+
 		let hintsToRecognize = linkAnalyzer.pref.hintsToRecognize.split(","); 
 		for (var i = 0; i < hintsToRecognize.length; i++) {
 			if (a.indexOf(hintsToRecognize[i]) > -1) {

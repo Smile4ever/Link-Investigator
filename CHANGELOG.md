@@ -1,3 +1,7 @@
+1.0.1 (2019-01-06)
+==================
+* Hotfix: keywords cause Link Investigator not to work, needs more investigation
+
 1.0.0 (2019-01-06)
 ==================
 
@@ -20,7 +24,6 @@ Options page:
 * Rephrased some options
 * Add option to automatically hide the statistics pop-up, after a set time of seconds (can be customized)
 * Use a textarea for links to skip instead of a input field
-
 
 And some organisational changes:
 * Change the PayPal.me link
