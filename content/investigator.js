@@ -105,7 +105,7 @@ linkAnalyzer = {
 		}
 	},
 	
-	//get elements position from top
+	// get elements position from top
 	getTop: function (elem) {
     	var p = 0;
 	    while ( elem.offsetParent ) {
@@ -142,16 +142,22 @@ linkAnalyzer = {
 	
 	// this function is called on every link, option, area .. 
 	// if goes through our 'omit list' - see preferences and return false if this link should be omited
-	omit: function (a) {
+	omit: function (a, parentElement) {
 		if(linkAnalyzer.pref.hintsToRecognize == "" || linkAnalyzer.pref.hintsToRecognize == null){
 			return true;
 		}
 
 		let hintsToRecognize = linkAnalyzer.pref.hintsToRecognize.split(","); 
 		for (var i = 0; i < hintsToRecognize.length; i++) {
-			if (a.indexOf(hintsToRecognize[i]) > -1) {
+			if (a.includes(hintsToRecognize[i])){
 				return false;
-			}		
+			}
+
+			if(parentElement != null){
+				if(parentElement.outerHTML.includes(hintsToRecognize[i])){
+					return false;
+				}
+			}
 		}
 		// being here means 'for' didn't return false
 		return true;
@@ -345,10 +351,12 @@ linkAnalyzer = {
 
 				// Extra - broken via redirect			
 				let responseUrl = new URL(xml.responseURL).pathname;
-				let requestUrl = new URL(xml.url).pathname.replace("Special:EntityPage", ""); // real requestUrl, plus workaround for Wikidata
+				let requestUrl = new URL(xml.url).pathname;
+				let blacklistForLevenstein = ["Aptaca","Arbennek","Arbennig","Arnawlı","Arnaýı","Astamiwa","Baxse","Berezi","Dibar","Doxmeli","Er_lheh","Erenoamáš","Eri","Especial","Espesial","Espesiat","Espesiál","Espesyal","Extra","Husus","Ibidasanzwe:","Ihü_kárírí","Immikkut","Ippiziari","Ispetziale","Istimewa","Istimiwa","Jagleel","Kerfissíða","Khas","Kusuih","Maalum","Maasus","Mahsus","Manokana","Maxsus","Mba\'echĩchĩ","Natatangi","Nōncuahquīzqui","Papa_nui","Patikos","Pinaurog","Posebno","Pàtàkì","Sapak","Sapaq","Schbezial","Schbädsjaal","Serstakt","Seviškuo","Sipeciås","Sipesol","Soronko","Specala","Speciaal","Special","Specialaĵo","Speciale","Specialine","Specialis","Specialne","Specialnje","Specialus","Speciaol","Speciel","Specioal","Speciàle","Speciális","Speciální","Speciâl","Specjalna","Specjalnô","Specēlos","Speisialta","Spesiaal","Spesial","Spesyal","Spezial","Speçiale","Speċjali","Spiciali","Spèciâl","Spécial","Syndrig","Szpecyjalna","Sònraichte","Tallituslehekülg","Taybet","Toiminnot","Uslig","Uzalutno","Wiki","Xususi","Xüsusi","Xısusi","khaas","Özel","Ýörite","Đặc_biệt","Špeciálne","Ειδικό","Ειδικόν","Адмысловае","Аналлаах","Арнайы","Атайын","Башка тевень","Башка","Белхан","Вижа","Къуллугъирал_лажин","Къуллукъ","Көдлхнә","Лӱмын_ыштыме","Махсус","Нарочьна","Отсасян","Панель","Посебно","Сæрмагонд","Служебная","Специални","Специјална","Спеціальна","Спецӹлӹштӓш","Спэцыяльныя","Тусгай","Тускай","Тусхай","Цастәи","Шпеціална","Ятарлă","Սպասարկող"];
+				let blacklisted = blacklistForLevenstein.some((value) => requestUrl.includes(value + ":"));
 
 				let levenstein = similarity(responseUrl, requestUrl);
-				if(levenstein < 0.70 && responseUrl.length < requestUrl.length){
+				if(levenstein < 0.70 && responseUrl.length < requestUrl.length && !blacklisted){
 					response = "linkBroken"
 					extra = "redirect to homepage (" + parseInt(levenstein * 100) + "% similarity)";
 				}
@@ -429,7 +437,7 @@ linkAnalyzer = {
 			}*/
 			
 			// filter out anchor links to page we are currently on and links with other protocol then http(s)
-			if ((anchor[i].href || "#").indexOf("#") != 0 && (anchor[i].href.indexOf("http") == 0 || anchor[i].href.indexOf("file") == 0) && linkAnalyzer.omit(anchor[i].href)) {
+			if ((anchor[i].href || "#").indexOf("#") != 0 && (anchor[i].href.indexOf("http") == 0 || anchor[i].href.indexOf("file") == 0) && linkAnalyzer.omit(anchor[i].href, anchor[i].parentElement)) {
 				// getHTTP will also color link and all other things by passing it with result to function "handler"
 				linkAnalyzer.getHTTP(anchor[i]);				
 			} else {
@@ -465,7 +473,7 @@ linkAnalyzer = {
 		for (var i = 0; i < area.length; i++) {
 			// the exact control as in case of <a> tags .. we need to make sure that it's not anchor to ID on this same page 
 			// and that it's http/https link..
-			if ((area[i].getAttribute("href") || "#").indexOf("#") != 0 && area[i].href.indexOf("http") == 0 && linkAnalyzer.omit(area[i].href)) {
+			if ((area[i].getAttribute("href") || "#").indexOf("#") != 0 && area[i].href.indexOf("http") == 0 && linkAnalyzer.omit(area[i].href, anchor[i].parentElement)) {
 				linkAnalyzer.getHTTP(area[i]);				
 			} else {
 				// this link will be skipped

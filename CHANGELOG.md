@@ -1,3 +1,9 @@
+1.0.2 (2019-01)
+==================
+* Fix bug with localisations
+* Fix bug with logout being triggered on MediaWiki sites
+* Fix bug: Levenstein needs a blacklist, implemented for Special pages on MediaWiki
+
 1.0.1 (2019-01-06)
 ==================
 * Hotfix: keywords cause Link Investigator not to work, needs more investigation

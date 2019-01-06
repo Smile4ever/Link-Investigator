@@ -22,7 +22,7 @@
 	"linksTimeOutLabel": { "message": "Ligazóns con tempo de espera excedido" },
 	"linksTimeOutCaptionLabel": { "message": "Cor para realzar as ligazóns que non devolveron ningunha cabeceira despois do tempo de espera" },
 	"linksSkippedLabel": { "message": "Ligazóns ignoradas" },
-	"linkSkippedCaptionLabel": { "message": "Cor para realzar as ligazóns que non son analizadas" },
+	"linksSkippedCaptionLabel": { "message": "Cor para realzar as ligazóns que non son analizadas" },
 	"linksInvalidLabel": { "message": "Ligazóns incorrectas" },
 	"linksInvalidCaptionLabel": { "message": "Cor para realzar as ligazóns que devolveron unha cabeceira, pero esta non foi http/https/file" },
 	"secondsTimeOutLabel": { "message": "Tempo de espera (en segundos)" },

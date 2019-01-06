@@ -22,7 +22,7 @@
 	"linksTimeOutLabel": { "message": "Timed Out Links" },
 	"linksTimeOutCaptionLabel": { "message": "Color to highlight links that didn't return any headers for a long time" },
 	"linksSkippedLabel": { "message": "Skipped links" },
-	"linkSkippedCaptionLabel": { "message": "Highlight color for links that weren't analyzed" },
+	"linksSkippedCaptionLabel": { "message": "Highlight color for links that weren't analyzed" },
 	"linksInvalidLabel": { "message": "Invalid Links" },
 	"linksInvalidCaptionLabel": { "message": "Highlight color for links that returned header, but it wasn't http/https header"},
 	"secondsTimeOutLabel": { "message": "Time-out (in seconds)" },

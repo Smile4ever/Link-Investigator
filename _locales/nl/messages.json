@@ -22,7 +22,7 @@
 	"linksTimeOutLabel": { "message": "Tijdslimietoverschrijdende links" },
 	"linksTimeOutCaptionLabel": { "message": "Markeerkleur voor links die de tijdslimiet om te openen hebben overschreden" },
 	"linksSkippedLabel": { "message": "Overgeslagen links" },
-	"linkSkippedCaptionLabel": { "message": "Markeerkleur voor links die niet werden onderzocht" },
+	"linksSkippedCaptionLabel": { "message": "Markeerkleur voor links die niet werden onderzocht" },
 	"linksInvalidLabel": { "message": "Ongeldige links" },
 	"linksInvalidCaptionLabel": { "message": "Markeerkleur voor links die een header terugstuurden die geen HTTP/HTTPS-header was"},
 	"secondsTimeOutLabel": { "message": "Tijdslimiet (in seconden)" },
