@@ -1,4 +1,10 @@
-1.0.2 (2019-01)
+1.1.0 (2020-02-23)
+==================
+* Introduce ~ to match "more or less" which means parent elements also get checked
+* Expand the README file
+* Change the default skip links containing to ~logoff,~logout,~signoff
+
+1.0.2 (2019-01-06)
 ==================
 * Fix bug with localisations
 * Fix bug with logout being triggered on MediaWiki sites
