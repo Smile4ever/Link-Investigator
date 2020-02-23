@@ -18,7 +18,7 @@ var defaultSettings = {
 	anchor: true,
 	option: true,
 	area: true,
-	hintsToRecognize: "logoff,logout,signoff"
+	hintsToRecognize: "~logoff,~logout,~signoff"
 };
 
 /* Create context menus */

@@ -148,13 +148,14 @@ linkAnalyzer = {
 		}
 
 		let hintsToRecognize = linkAnalyzer.pref.hintsToRecognize.split(","); 
-		for (var i = 0; i < hintsToRecognize.length; i++) {
-			if (a.includes(hintsToRecognize[i])){
+		for (let hint of hintsToRecognize) {
+			let realHint = hint.replace("~", "");
+			if (a.includes(realHint)){
 				return false;
 			}
 
-			if(parentElement != null){
-				if(parentElement.outerHTML.includes(hintsToRecognize[i])){
+			if(parentElement != null && hint.includes("~")){
+				if(parentElement.outerHTML.includes(realHint)){
 					return false;
 				}
 			}

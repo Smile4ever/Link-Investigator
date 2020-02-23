@@ -1,20 +1,44 @@
 # Link Investigator
 
-Investigates the HTTP status of links in a webpage, selection or link. Based on  https://github.com/damufo/link-analyzer
+Investigates the HTTP status of links in a webpage, selection or link. Based on https://github.com/damufo/link-analyzer
 
 ## Features
-* Detection and color coding: different colors indicate different statuses of availability or unavailability of links
-* Shows the HTTP status of a link when you hover it, including the reason why it got color-coded as such
-* Browser action button, to quickly check a webpage
-** The counter will be set to indicate that some unavailable links were found
-** The counter will be set shortly in green when all links are available
-** The tooltip, which can be seen on hover of the button, displays information about the last check on the current tab
-* F4, a shortcut to check all links on a webpage
-* Shift+F4, a shortcut to check all links in a selection
-* Overview window, showing you an overview
-** The overview window can be hidden automatically after a timeout
-** The overview window is off by default, but can be enabled on the options page
+* In-page link availability checking and color coding: different colors indicate different statuses of availability or unavailability of links
+* Browser action button, to quickly check a webpage and quickly see the results
+* Overview window, showing you an overview of the checked and skipped links
 * Options page, where you can set the colors used
+
+## How does it work?
+You have a few options to choose from.
+
+With shortcuts
+* You can press F4 to check a whole page.
+* You can press Shift+F4 to check all the links in a selection.
+
+With mouse - right click menu
+* Right click a link -> Check.
+* Right click a selection -> Check all links in selection
+* Right click a page -> Check all links on the page
+
+With mouse - browser action button
+* Click the button of the addon to check all links on the page
+* If you have a selection and you click the button, only the selection will be checked
+
+# Where do I see the result?
+There are a few places where you can see the result.
+
+In the page itself:
+* every link gets color-coded. Different colors have different meanings, which can be configured on the options page
+* every link gets a tooltip, showing the HTTP status of a link when you hover it, including the reason why it got color-coded as such
+
+In the browser action button:
+* The counter will be set to indicate that some unavailable links were found
+* The counter will be set shortly in green when all links are available
+* The tooltip, which can be seen on hover of the button, displays information about the last check on the current tab
+
+In the overview window:
+* The overview window can be hidden automatically after a timeout
+* The overview window is off by default, but can be enabled on the options page
 
 ## Detection of dead links
 ###Indicators
@@ -31,6 +55,11 @@ As you might guess, these indicators indicate that there is a high chance that t
 
 ### Skipped links
 Some links are not checked, these include JavaScript URLs by default, and links that are related to login and logout. These can be extended by you, the user, by going to the options page where you can add extra keywords.
+
+* Recommended "skip links containing":
+  - ~logoff,~logout,~signoff
+* My personal "skip links containing" (for use with Wikipedia):
+  - ~logoff,~logout,~signoff,google,archive.is,archive.today,web.archive.org,Speciaal,manageurlsingle
 
 ### Notes about the link context
 The "link" context doesn't know which link you clicked, only the URL that was associated with that link. As such, it can happen that multiple elements on the page with the same URL are highlighted while you expect only one element to be highlighted.
