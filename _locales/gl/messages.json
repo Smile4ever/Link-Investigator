@@ -53,11 +53,12 @@
 	"help": { "message": "Axuda" },
 
 	"testDuration": { "message": "Duración da análise" },
-	"linksFinePopup": { "message": "A ligazón devolveu un código entre 200 e 300, o que significa que está ben." },
+	"linksFinePopup": { "message": "A ligazón devolveu un código entre 200 e 299, o que significa que está ben." },
 	"linksBrokenPopup": { "message": "A ligazón devolveu o código 404 ou outro non pode conquerir." },
 	"linksTimeOutPopup": { "message": "A ligazón tivo {secondsTimeOut} segundos para abrir e devolver a cabeceira. Pero non o fixo." },
 	"linksInvalidPopup": { "message": "A ligazón non devolveu ningunha cabeceira válida. Ou o servidor está caído, ou está redirixido a un protocolo diferente dos válidos." },
 	"linksSkippedPopup": { "message": "A ligazón non foi probada. Pode que sexa unha áncora a esta páxina (#), ou javascript, etc." },
+	"conclusionFine": { "message": "Every checked link was fine" },
 
 	"browserButtonTitle": { "message": "Link Investigator - Click to check the current page" },
 

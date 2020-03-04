@@ -2,11 +2,9 @@
 
 const amo = /^https?:\/\/(discovery\.)?(addons\.mozilla\.org|testpilot\.firefox\.com)|^about:/i;
 
-var settings = {};
-/*
-Default settings. If there is nothing in storage, use these values.
-*/
-var defaultSettings = {
+let settings = {};
+// Default settings. If there is nothing in storage, use these values.
+const defaultSettings = {
 	linkFine: "#B2FFB7",
 	linkBroken: "#CC0000",
 	linkTimeOut: "#FFCC99",
@@ -20,8 +18,10 @@ var defaultSettings = {
 	area: true,
 	hintsToRecognize: "~logoff,~logout,~signoff"
 };
+const icon_64 = "icons/link-investigator-64.png";
+const icon_512 = "icons/link-investigator-512.png";
 
-/* Create context menus */
+// Create context menus
 browser.contextMenus.create(getContextMenu('page'));
 browser.contextMenus.create(getContextMenu('link'));
 browser.contextMenus.create(getContextMenu('selection'));
@@ -32,8 +32,8 @@ function getContextMenu(context){
 		title: browser.i18n.getMessage('menu' + context.substring(0, 1).toUpperCase() + context.substring(1)),
 		contexts: [context],
 		icons: {
-			"64": "icons/link-investigator-64.png",
-			"512": "icons/link-investigator-512.png"
+			"64": icon_64,
+			"512": icon_512
 		},
 		documentUrlPatterns: ['<all_urls>'],
 		onclick : check
@@ -56,17 +56,17 @@ browser.commands.onCommand.addListener(function(command) {
 });
 
 function getSettings() {
-	return new Promise(function (resolve, reject) {
-			browser.storage.local.get("settings", function (value) {
-					for (let i in defaultSettings) {
-							if (value.settings != undefined && value.settings[i] != undefined) {
-									settings[i] = value.settings[i];
-							} else {
-								settings[i] = defaultSettings[i];
-							}
-					}
-					resolve(settings);
-			});
+	return new Promise((resolve, reject) => {
+		browser.storage.local.get("settings", (value) => {
+			for (let i in defaultSettings) {
+				if (value.settings != undefined && value.settings[i] != undefined) {
+					settings[i] = value.settings[i];
+				} else {
+					settings[i] = defaultSettings[i];
+				}
+			}
+			resolve(settings);
+		});
 	})
 }
 

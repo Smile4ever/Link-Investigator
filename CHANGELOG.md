@@ -1,3 +1,14 @@
+1.2.0 (2020-03-04)
+==================
+* Rework statistics popup:
+** Rephrase explanations in statistics popup
+** Add icons to every category
+** Add a conclusion icon, to see whether a page contains dead links (dead emoji) or all links are alive (monkey image)
+** Broken links: rework to be proper links
+** Remove test duration feature
+* Use let instead of var
+* Remove use of innerHTML in investigator.js
+
 1.1.0 (2020-02-23)
 ==================
 * Introduce ~ to match "more or less" which means parent elements also get checked

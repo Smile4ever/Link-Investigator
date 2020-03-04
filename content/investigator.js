@@ -32,7 +32,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 "use strict";
 
-var linkAnalyzer = {};
+let linkAnalyzer = {};
 linkAnalyzer.popup = {};
 
 linkAnalyzer = {	
@@ -50,9 +50,9 @@ linkAnalyzer = {
 		// we will need to get elements from all page and then just filter out those not in scope		
 		if (scope != null) {
 			// array for all elements in scope
-			var r = new Array();
+			let r = new Array();
 			// get elements with this tag name from whole page, using this same function
-			var el = linkAnalyzer.elem ( name );
+			let el = linkAnalyzer.elem (name);
 			
 			// loop through them and if they are in selection, push them into array			
 			for (var i = 0; i < el.length; i++) {
@@ -76,21 +76,21 @@ linkAnalyzer = {
 	// will find selection on page and return true if it exists
 	// if there is a parameter passed in, it will return the selection itself
 	getSel: function () {
-		var s = window.top.getSelection();
+		let s = window.top.getSelection();
 		return arguments.length == 0 ? s.rangeCount > 0 && s.toString().length > 0 : s;		
 	},
 	
 	// deselect current selection on page
 	deselect: function () {
 		// get current selection
-		var s = this.getSel(true);
+		let s = this.getSel(true);
 		// remove range
 		return s.removeRange( s.getRangeAt(0) );		
 	},
 	
 	// set css to certain element
 	css: function (elem, set) {
-		for (var i in set) {
+		for (let i in set) {
 			elem.style[i] = set[i];			
 		}		
 	},
@@ -100,14 +100,14 @@ linkAnalyzer = {
 		if (elem.style[name]) {
         	return parseInt(elem.style[name]);
 		} else {
-        	var s = window.top.document.defaultView.getComputedStyle(elem,"");
+        	let s = window.top.document.defaultView.getComputedStyle(elem,"");
         	return parseInt(s && s.getPropertyValue(name));	
 		}
 	},
 	
 	// get elements position from top
 	getTop: function (elem) {
-    	var p = 0;
+    	let p = 0;
 	    while ( elem.offsetParent ) {
         	p += elem.offsetTop;
         	elem = elem.offsetParent;
@@ -117,7 +117,7 @@ linkAnalyzer = {
 	
 	// get elements absolute position from left
 	getLeft : function (elem ) {
-		var p = 0;
+		let p = 0;
 		while ( elem.offsetParent ) {
         	p += elem.offsetLeft;
 			elem = elem.offsetParent;
@@ -127,7 +127,7 @@ linkAnalyzer = {
 	
 	// return true if argument "s" is url, otherwise false
 	url: function (s) {
-    	var regexp = /(ftp|http|https|\/\/):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+    	const regexp = /(ftp|http|https|\/\/):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
      	return regexp.test(s);
     },
 	
@@ -166,7 +166,7 @@ linkAnalyzer = {
 	
 	// constructors for 2 objects that will be created for every check at the very begining
 	// statistics - how many links were checked, how many were broken, how long did it take, etc
-	// preferences - everything that can be set in preferences window
+	// preferences - everything that can be set in preferences window (sent from the background script)
 	statisticsConst: function () {
 		this.linkFine =  new Array();
 		this.linkBroken = new Array();
@@ -183,18 +183,18 @@ linkAnalyzer = {
 	// default preferences	
 	prefConst: function () {    
 		this.linkFine = "#B2FFB7";
-		this.linkBroken =  "#CC0000";
-		this.timedOut =  "#FFCC99";
-		this.linkSkipped =  "#CCCCCC";
-		this.linkInvalid =  "#999900";
-		this.secondsTimeOut =  45;
-		this.showStats =  false;
+		this.linkBroken = "#CC0000";
+		this.timedOut = "#FFCC99";
+		this.linkSkipped = "#CCCCCC";
+		this.linkInvalid = "#999900";
+		this.secondsTimeOut = 45;
+		this.showStats = false;
 		this.hideStatsAfter = 0;
 
-		this.anchor =  true;
-		this.option =  true;
-		this.area =  true;
-		this.hintsToRecognize = "logoff,logout,signoff";
+		this.anchor = true;
+		this.option = true;
+		this.area = true;
+		this.hintsToRecognize = "~logoff,~logout,~signoff";
 	},
 
 	pref: null,
@@ -205,10 +205,10 @@ linkAnalyzer = {
 	
 	showHideEvent: function () {
 		// id of menu item with option to check just selection
-		var p = linkAnalyzer.id ("pinger-selected-links");
+		let p = linkAnalyzer.id ("pinger-selected-links");
 		
 		// 	if there is selection, then r will equal false (don't hide), otherwise true (hide it)
-		var r = linkAnalyzer.getSel() ? false : true;
+		let r = linkAnalyzer.getSel() ? false : true;
 		
 		// show or hide menu item, depending on existence of selection
 		linkAnalyzer.attr (p, "hidden", r);
@@ -216,7 +216,7 @@ linkAnalyzer = {
 	
 	// this function will handle any results - styling link, chaning colors, titles, etc
 	handler: function (r, el, status, extra) {
-		var color = linkAnalyzer.pref[r];
+		let color = linkAnalyzer.pref[r];
 		
 		// add this to it's appropriate statistic array
 		linkAnalyzer.statistics[r].push(el);
@@ -228,7 +228,7 @@ linkAnalyzer = {
 		linkAnalyzer.attr(el, "title", "This link was marked as \"" + statusHuman + "\"" + extraText);
 		
 		// and last, let's check if we didn't check all links already
-		var temp = linkAnalyzer.statistics.linkFine.length + 
+		let temp = linkAnalyzer.statistics.linkFine.length + 
 			linkAnalyzer.statistics.linkBroken.length + 
 			linkAnalyzer.statistics.linkTimeOut.length + 
 			linkAnalyzer.statistics.linkSkipped.length +
@@ -241,6 +241,9 @@ linkAnalyzer = {
 		if (r == "broken") {
 			this.handleBrokenImages (el);		
 		}
+
+		// Set code to link
+		el.setAttribute("data-statuscode", status);
 		
 		// change CSS of this link
 		return linkAnalyzer.css(el, {backgroundColor: color});
@@ -251,20 +254,20 @@ linkAnalyzer = {
 	// with color of broken link, from preferences and we put this overlay over the image
 	// additional functions used : this.getTop, getLeft, currentCSS
 	handleBrokenImages: function (el) {
-		var tag = el.nodeName.toLowerCase();
+		let tag = el.nodeName.toLowerCase();
 		// if we are dealing with area
 		if (tag == "area") {
 			// we need to find image associated with this area
 			// get all images
-			var o = linkAnalyzer.elem ("img");
-			for (var j = 0; j < o.length; j++) {
+			let images = linkAnalyzer.elem ("img");
+			for (let image of images) {
 				// get their "usermap" attr
-				var usemap = linkAnalyzer.attr (o[j], "usemap");
+				let usemap = linkAnalyzer.attr (image, "usemap");
 				// if usemap exicts, check if it's the one we are looking for					
 				if (usemap && usemap == "#" + el.parentNode.id) {
 					// this is the image we need to color
 					// create overlay for this image
-					linkAnalyzer.createOverlay (o[j]);												
+					linkAnalyzer.createOverlay (image);												
 				}	
 			}			
 		} else if (tag == "a" && el.childNodes[0].nodeName.toLowerCase() == "img") {
@@ -279,7 +282,7 @@ linkAnalyzer = {
 	
 	// creates an overlay over image within broken link
 	createOverlay: function (el) {
-		var overlay = window.top.document.createElement("div");
+		let overlay = window.top.document.createElement("div");
 		window.top.document.body.appendChild ( overlay );
 						
 		// el => image we need to cover						
@@ -300,13 +303,13 @@ linkAnalyzer = {
 	
 	// function to get http response code of url
 	getHTTP: function (el) {
-		var xml = new XMLHttpRequest();
+		let xml = new XMLHttpRequest();
 		
 		// if we are dealing with a link or area tag, then we get it's .href, otherwise it's probably value from option
-		var tag = el.nodeName.toLowerCase();		
-		var url = (tag == "a" || tag == "area") ? el.href : linkAnalyzer.attr (el, "value");
+		let tag = el.nodeName.toLowerCase();		
+		let url = (tag == "a" || tag == "area") ? el.href : linkAnalyzer.attr (el, "value");
 				
-		var requestDone = false;	
+		let requestDone = false;	
 		
 		setTimeout(function() { 
 			// at this point, XX seconds passed for this request
@@ -353,11 +356,25 @@ linkAnalyzer = {
 				// Extra - broken via redirect			
 				let responseUrl = new URL(xml.responseURL).pathname;
 				let requestUrl = new URL(xml.url).pathname;
-				let blacklistForLevenstein = ["Aptaca","Arbennek","Arbennig","Arnawlı","Arnaýı","Astamiwa","Baxse","Berezi","Dibar","Doxmeli","Er_lheh","Erenoamáš","Eri","Especial","Espesial","Espesiat","Espesiál","Espesyal","Extra","Husus","Ibidasanzwe:","Ihü_kárírí","Immikkut","Ippiziari","Ispetziale","Istimewa","Istimiwa","Jagleel","Kerfissíða","Khas","Kusuih","Maalum","Maasus","Mahsus","Manokana","Maxsus","Mba\'echĩchĩ","Natatangi","Nōncuahquīzqui","Papa_nui","Patikos","Pinaurog","Posebno","Pàtàkì","Sapak","Sapaq","Schbezial","Schbädsjaal","Serstakt","Seviškuo","Sipeciås","Sipesol","Soronko","Specala","Speciaal","Special","Specialaĵo","Speciale","Specialine","Specialis","Specialne","Specialnje","Specialus","Speciaol","Speciel","Specioal","Speciàle","Speciális","Speciální","Speciâl","Specjalna","Specjalnô","Specēlos","Speisialta","Spesiaal","Spesial","Spesyal","Spezial","Speçiale","Speċjali","Spiciali","Spèciâl","Spécial","Syndrig","Szpecyjalna","Sònraichte","Tallituslehekülg","Taybet","Toiminnot","Uslig","Uzalutno","Wiki","Xususi","Xüsusi","Xısusi","khaas","Özel","Ýörite","Đặc_biệt","Špeciálne","Ειδικό","Ειδικόν","Адмысловае","Аналлаах","Арнайы","Атайын","Башка тевень","Башка","Белхан","Вижа","Къуллугъирал_лажин","Къуллукъ","Көдлхнә","Лӱмын_ыштыме","Махсус","Нарочьна","Отсасян","Панель","Посебно","Сæрмагонд","Служебная","Специални","Специјална","Спеціальна","Спецӹлӹштӓш","Спэцыяльныя","Тусгай","Тускай","Тусхай","Цастәи","Шпеціална","Ятарлă","Սպասարկող"];
-				let blacklisted = blacklistForLevenstein.some((value) => requestUrl.includes(value + ":"));
-
+				
+				let specialBlacklistForLevenstein = ["Aptaca","Arbennek","Arbennig","Arnawlı","Arnaýı","Astamiwa","Baxse","Berezi","Dibar","Doxmeli","Er_lheh","Erenoamáš","Eri","Especial","Espesial","Espesiat","Espesiál","Espesyal","Extra","Husus","Ibidasanzwe:","Ihü_kárírí","Immikkut","Ippiziari","Ispetziale","Istimewa","Istimiwa","Jagleel","Kerfissíða","Khas","Kusuih","Maalum","Maasus","Mahsus","Manokana","Maxsus","Mba\'echĩchĩ","Natatangi","Nōncuahquīzqui","Papa_nui","Patikos","Pinaurog","Posebno","Pàtàkì","Sapak","Sapaq","Schbezial","Schbädsjaal","Serstakt","Seviškuo","Sipeciås","Sipesol","Soronko","Specala","Speciaal","Special","Specialaĵo","Speciale","Specialine","Specialis","Specialne","Specialnje","Specialus","Speciaol","Speciel","Specioal","Speciàle","Speciális","Speciální","Speciâl","Specjalna","Specjalnô","Specēlos","Speisialta","Spesiaal","Spesial","Spesyal","Spezial","Speçiale","Speċjali","Spiciali","Spèciâl","Spécial","Syndrig","Szpecyjalna","Sònraichte","Tallituslehekülg","Taybet","Toiminnot","Uslig","Uzalutno","Wiki","Xususi","Xüsusi","Xısusi","khaas","Özel","Ýörite","Đặc_biệt","Špeciálne","Ειδικό","Ειδικόν","Адмысловае","Аналлаах","Арнайы","Атайын","Башка тевень","Башка","Белхан","Вижа","Къуллугъирал_лажин","Къуллукъ","Көдлхнә","Лӱмын_ыштыме","Махсус","Нарочьна","Отсасян","Панель","Посебно","Сæрмагонд","Служебная","Специални","Специјална","Спеціальна","Спецӹлӹштӓш","Спэцыяльныя","Тусгай","Тускай","Тусхай","Цастәи","Шпеціална","Ятарлă","Սպասարկող"];
+				let specialBlacklisted = specialBlacklistForLevenstein.some((value) => requestUrl.includes(value + ":"));
+				
+				let blacklistForLevenstein = [""];
+				let blacklisted = blacklistForLevenstein.some((value) => requestUrl.includes(value));
+				
+				// request
+				// http://www.hln.be/hln/nl/957/Belgie/article/detail/1085059/2010/03/25/Jean-Marie-Dedecker-beschuldigd-van-gesjoemel.dhtml
+				
+				// response
+				// https://myprivacy.dpgmedia.be/?siteKey=Uqxf9TXhjmaG4pbQ&callbackUrl=https%3a%2f%2fwww.hln.be%2fprivacy-wall%2faccept%3fredirectUri%3d%2fhln%2fnl%2f957%2fBelgie%2farticle%2fdetail%2f1085059%2f2010%2f03%2f25%2fJean-Marie-Dedecker-beschuldigd-van-gesjoemel.dhtml
+				let decodedResponseUrl = decodeURIComponent(xml.responseURL);			
+				if(decodedResponseUrl.includes("redirect") && decodedResponseUrl.lastIndexOf("://") > 10){
+					responseUrl = decodedResponseUrl.substring(decodedResponseUrl.indexOf("redirect") + 8);
+				}
+				
 				let levenstein = similarity(responseUrl, requestUrl);
-				if(levenstein < 0.70 && responseUrl.length < requestUrl.length && !blacklisted){
+				if(levenstein < 0.70 && responseUrl.length < requestUrl.length && !blacklisted && !specialBlacklisted){
 					response = "linkBroken"
 					extra = "redirect to homepage (" + parseInt(levenstein * 100) + "% similarity)";
 				}
@@ -376,15 +393,16 @@ linkAnalyzer = {
 			method = "GET";
 		}
 		xml.open(method, url, true);
-		xml.withCredentials = true; 
+		xml.withCredentials = true;
+		// Workaround for the fact that the xml object has no requestUrl property
 		xml.url = url;
 		xml.method = method;
 		xml.send();
 	},
 	
 	// checking function, can be called from context menu
-	check: function (scope, context, infoLinkUrl) {
-		// if prerefences exists, it means there is ongoing check in another window .. 
+	check: function (context, infoLinkUrl) {
+		// if preferences exists, it means there is ongoing check in another window .. 
 		//if (linkAnalyzer.pref) { return; }
 		// load new preferences for this check
 		//linkAnalyzer.pref = new linkAnalyzer.prefConst();
@@ -392,25 +410,23 @@ linkAnalyzer = {
 		linkAnalyzer.statistics = new linkAnalyzer.statisticsConst();
 		
 		// set when we started this check
-		var a = new Date();
-		linkAnalyzer.statistics.atm = a.getTime();
+		linkAnalyzer.statistics.atm = new Date().getTime();
 		
-		// ---------------------------------------
-		// are we checking the whole document, or just selection ?
-		// if there are any parameters passed with function, it means we are checking in selection
-		var scope = arguments.length != 0 ? linkAnalyzer.getSel(true) : null;
+		// Are we checking the whole document, or just selection ?
+		// If there are any parameters passed with function, it means we are checking a selection
+		let scope = context === "selection" ? linkAnalyzer.getSel(true) : null;
 		
 		// Let's get all links in this scope
-		var anchor = linkAnalyzer.pref.anchor ? linkAnalyzer.elem ("a", scope) : new Array();
+		let anchor = linkAnalyzer.pref.anchor ? linkAnalyzer.elem ("a", scope) : new Array();
 
 		// Support for link context
 		if(context == "link" && infoLinkUrl != null){
 			// Look for absolute link
-			var elements = document.querySelectorAll("a[href='" + infoLinkUrl + "']");
+			let elements = document.querySelectorAll("a[href='" + infoLinkUrl + "']");
 			
 			if(elements.length == 0){
 				// Check if root relative link can be found on the page
-				var path = new URL(infoLinkUrl).pathname;
+				let path = new URL(infoLinkUrl).pathname;
 				elements = document.querySelectorAll("a[href='" + path + "']");
 				
 				if(elements.length == 0){
@@ -448,8 +464,8 @@ linkAnalyzer = {
 		}
 		
 		// ----------------------------------------------
-		// now let's dosomething similiar for option tags
-		var option = linkAnalyzer.pref.option ? linkAnalyzer.elem ("option", scope) : new Array();
+		// Now let's do something similiar for option tags
+		let option = linkAnalyzer.pref.option ? linkAnalyzer.elem ("option", scope) : new Array();
 		// loop through all option tags
 		for (var i = 0; i < option.length; i++) {
 			// first, we need to check if they have "value" tag and then if it contains a link
@@ -487,15 +503,12 @@ linkAnalyzer = {
 		// if there is a scope, then we need to deselect selected text on page
 		scope ? linkAnalyzer.deselect() : null;
         //scope ? linkAnalyzer.pref = null : null;
-        
 	},
 	
-	// end function, to say what we found.. blah blah..
+	// end function, to say what we found..
 	end: function () {	
-		var b = new Date();
-		
 		// .diff variable will hold difference between start and actual time, so we know how long it took to check the page
-		linkAnalyzer.statistics.diff = ( Math.round ( (b.getTime() - linkAnalyzer.statistics.atm) / 1000) );
+		linkAnalyzer.statistics.diff = ( Math.round ( (new Date().getTime() - linkAnalyzer.statistics.atm) / 1000) );
 		
 		// EYE CANDY
 		// this will dim the whole screen and show statistics
@@ -548,7 +561,7 @@ linkAnalyzer.popup = {
 		// Screen is in cool black 
 		// Now we need to create some sort of information table, about statistics from this check
 		// 1 div to hold it all within
-		var stats = window.top.document.createElement ("div");
+		let stats = window.top.document.createElement ("div");
 		// append it just beneath our overlay
 		window.top.document.body.appendChild ( stats );
 		// set CSS
@@ -558,8 +571,8 @@ linkAnalyzer.popup = {
 		linkAnalyzer.css ( stats , { position: "fixed",
 					top: "100px",
 					left: "30%",
-					width: "570px",
-					height: "315px",
+					width: "650px",
+					maxHeight: "350px",
 					zIndex: "100",
 					background: "#fff",
 					display: "block",
@@ -570,193 +583,210 @@ linkAnalyzer.popup = {
 					padding: "5px 10px 10px 20px",
 					"overflow-y": "auto" });
 		
-		var secondsTimeOut = linkAnalyzer.pref.secondsTimeOut;
-		var element;
-		var content;
-		var styleH2;
-		var styleSup;
-		var sup;
-		var line;
-
-		styleH2 = "font-size: 20px; color: #000; font-weight: bold; padding-bottom: 5px; margin-bottom: 5px;";
-
-		element = document.createElement("H2");
-		element.style.cssText = styleH2
-
-		content = document.createTextNode(browser.i18n.getMessage("extensionName"));
-		element.appendChild(content);
-		stats.appendChild(element);
-
-		styleSup = "color: #666666; font-size: 10px";
-
-		line = document.createElement("P");
-
-		// Links Fine
-		sup = document.createElement("SUP");
-		sup.style.cssText = styleSup
-		content = document.createTextNode("1");
-		sup.appendChild(content);
-
-		line.appendChild(sup);
-		content = document.createTextNode(browser.i18n.getMessage('linksFineLabel') + ": " + linkAnalyzer.statistics.linkFine.length );
-		line.appendChild(content);
-		line.appendChild(document.createElement("BR"));
-
-		// Links Broken
-		sup = document.createElement("SUP");
-		sup.style.cssText = styleSup
-		content = document.createTextNode("2");
-		sup.appendChild(content);
-
-		line.appendChild(sup);
-		content = document.createTextNode(browser.i18n.getMessage("linksBrokenLabel") + ": " + linkAnalyzer.statistics.linkBroken.length );
-		line.appendChild(content);
-		line.appendChild(document.createElement("BR"));
-
-
-		// Links Timed Out
-		sup = document.createElement("SUP");
-		sup.style.cssText = styleSup
-		content = document.createTextNode("3");
-		sup.appendChild(content);
-
-		line.appendChild(sup);
-		content = document.createTextNode(browser.i18n.getMessage("linksTimeOutLabel") + ": " + linkAnalyzer.statistics.linkTimeOut.length );
-		line.appendChild(content);
-		line.appendChild(document.createElement("BR"));
-
-		// Links Invalid
-		sup = document.createElement("SUP");
-		sup.style.cssText = styleSup
-		content = document.createTextNode("4");
-		sup.appendChild(content);
-
-		line.appendChild(sup);
-		content = document.createTextNode(browser.i18n.getMessage("linksInvalidLabel") + ": " + linkAnalyzer.statistics.linkInvalid.length );
-		line.appendChild(content);
-		line.appendChild(document.createElement("BR"));
-
-		stats.appendChild(line);
-
-		// Links Skipped
-		sup = document.createElement("SUP");
-		sup.style.cssText = styleSup
-		content = document.createTextNode("5");
-		sup.appendChild(content);
-
-		line.appendChild(sup);
-		content = document.createTextNode(browser.i18n.getMessage("linksSkippedLabel") + ": " + linkAnalyzer.statistics.linkSkipped.length );
-		line.appendChild(content);
-		line.appendChild(document.createElement("BR"));
-
-		stats.appendChild(line);
-
-		line = document.createElement("P");
-		content = document.createTextNode(browser.i18n.getMessage("testDuration") + ": " + linkAnalyzer.statistics.diff + " " + browser.i18n.getMessage("seconds"));
-		line.appendChild(content);
-
-		stats.appendChild(line);
-
-		// legends
-		line = document.createElement("P");
+		/* Custom styles */
+		let styleTitleElement = "font-size: 20px; color: #000; font-weight: bold; padding-bottom: 5px; margin-bottom: 5px; border-bottom: 2px solid #5595ff;";
+		let styleSup = "color: #666666; font-size: 10px";
+		let styleH2brokenLinks = "color: #000; font-weight: bold; padding-bottom: 5px; margin-bottom: 5px;";
 		
-		// Links Fine
-		sup = document.createElement("SUP");
-		sup.style.cssText = styleSup;
-		content = document.createTextNode("1");
-		sup.appendChild(content);
+		/* Icon */
+		let iconElement = document.createElement("img");
+		iconElement.src = browser.runtime.getURL("icons/link-investigator-64.png");
+		iconElement.style.width = "22px";
+		iconElement.style.height = "22px";
+		iconElement.style.display = "inline-block";
+		iconElement.style.marginRight = "5px";
 
-		line.appendChild(sup);
-		content = document.createTextNode(browser.i18n.getMessage("linksFinePopup"));
-		line.appendChild(content);
-		line.appendChild(document.createElement("BR"));
+		/* Title */
+		let titleElement = document.createElement("div");
+		titleElement.style.cssText = styleTitleElement;
+
+		let content = document.createTextNode(browser.i18n.getMessage("extensionName"));
+		
+		titleElement.appendChild(iconElement);
+		titleElement.appendChild(content);
+
+		stats.appendChild(titleElement);
+
+		let generateItemForLegend = function(messageId){
+			let invalidContentContainer = document.createElement("span");
+			invalidContentContainer.style.cssText = styleSup;
+			content = document.createTextNode(browser.i18n.getMessage(messageId).replace("{secondsTimeOut}", linkAnalyzer.pref.secondsTimeOut));
+			invalidContentContainer.appendChild(content);
+
+			return invalidContentContainer;
+		};
+
+		let generateIcon = function(iconName, title, size){
+			let imageElement = document.createElement("img");
+
+			if(iconName == ""){
+				iconName = "alert";
+				imageElement.style.visibility = "hidden";
+			}
+			
+
+			if(size == undefined){
+				size = "16px";
+			}
+
+			imageElement.src = browser.runtime.getURL("/icons/" + iconName + ".png");
+			imageElement.style.width = size;
+			imageElement.style.height = size;
+			imageElement.style.marginRight = "4px";
+			imageElement.title = title;
+
+			return imageElement;
+		}
+
+		// Alert icon sourced from https://www.flaticon.com/free-icon/alert_550096?term=alert&page=1&position=6
+		// Emojis sourced from https://www.flaticon.com/packs/emojis-13
+		// Monkey from https://freesvg.org/happy-monkeys
+
+		// Conclusion init
+		let conclusionIconSet = false;
+		const conclusionIconSize = "64px";
+		let conclusionElement = document.createElement("div");
+		conclusionElement.style.padding = "10px 200px 10px 200px";
+
+		// Links Fine
+		if(linkAnalyzer.statistics.linkFine.length >= 0){
+			let line = document.createElement("p");
+
+			line.appendChild(generateIcon("cool", "Fine"));
+
+			content = document.createTextNode(browser.i18n.getMessage('linksFineLabel') + ": " + linkAnalyzer.statistics.linkFine.length );
+			line.appendChild(content);
+			line.appendChild(document.createElement("BR"));
+
+			line.appendChild(generateItemForLegend("linksFinePopup"));
+
+			stats.appendChild(line);
+		}
 
 		// Links Broken
-		sup = document.createElement("SUP");
-		sup.style.cssText = styleSup;
-		content = document.createTextNode("2");
-		sup.appendChild(content);
+		if(linkAnalyzer.statistics.linkBroken.length > 0){
+			let line = document.createElement("p");
+			
+			line.appendChild(generateIcon("dead", "Dead"));
 
-		line.appendChild(sup);
-		content = document.createTextNode(browser.i18n.getMessage("linksBrokenPopup"));
-		line.appendChild(content);
-		line.appendChild(document.createElement("BR"));
+			content = document.createTextNode(browser.i18n.getMessage("linksBrokenLabel") + ": " + linkAnalyzer.statistics.linkBroken.length );
+			line.appendChild(content);
+			line.appendChild(document.createElement("BR"));
 
+			line.appendChild(generateItemForLegend("linksBrokenPopup"));
+
+			stats.appendChild(line);
+
+			if(!conclusionIconSet){
+				conclusionElement.appendChild(generateIcon("dead", "Dead", conclusionIconSize));
+				conclusionIconSet = true;
+			}
+		}
 
 		// Links Timed Out
-		sup = document.createElement("SUP");
-		sup.style.cssText = styleSup;
-		content = document.createTextNode("3");
-		sup.appendChild(content);
+		if(linkAnalyzer.statistics.linkTimeOut.length > 0){
+			let line = document.createElement("p");
 
-		line.appendChild(sup);
-		content = document.createTextNode(browser.i18n.getMessage("linksTimeOutPopup").replace("{secondsTimeOut}", linkAnalyzer.pref.secondsTimeOut));
-		line.appendChild(content);
-		line.appendChild(document.createElement("BR"));
+			line.appendChild(generateIcon("alert", "Timed out"));
+
+			content = document.createTextNode(browser.i18n.getMessage("linksTimeOutLabel") + ": " + linkAnalyzer.statistics.linkTimeOut.length );
+			line.appendChild(content);
+			line.appendChild(document.createElement("BR"));
+
+			line.appendChild(generateItemForLegend("linksTimeOutPopup"));
+
+			stats.appendChild(line);
+
+			if(!conclusionIconSet){
+				conclusionElement.appendChild(generateIcon("alert", "Timed out", conclusionIconSize));
+				conclusionIconSet = true;
+			}
+		}
 
 		// Links Invalid
-		sup = document.createElement("SUP");
-		sup.style.cssText = styleSup;
-		content = document.createTextNode("4");
-		sup.appendChild(content);
+		if(linkAnalyzer.statistics.linkInvalid.length > 0){
+			let line = document.createElement("p");
 
-		line.appendChild(sup);
-		content = document.createTextNode(browser.i18n.getMessage("linksInvalidPopup"));
-		line.appendChild(content);
-		line.appendChild(document.createElement("BR"));
+			line.appendChild(generateIcon("alert", "Invalid"));
 
-		stats.appendChild(line);
+			content = document.createTextNode(browser.i18n.getMessage("linksInvalidLabel") + ": " + linkAnalyzer.statistics.linkInvalid.length );
+			line.appendChild(content);
+			line.appendChild(document.createElement("BR"));
+			
+			line.appendChild(generateItemForLegend("linksInvalidPopup"));
+
+			stats.appendChild(line);
+
+			if(!conclusionIconSet){
+				conclusionElement.appendChild(generateIcon("alert", "Invalid", conclusionIconSize));
+				conclusionIconSet = true;
+			}
+		}
 
 		// Links Skipped
-		sup = document.createElement("SUP");
-		sup.style.cssText = styleSup;
-		content = document.createTextNode("5");
-		sup.appendChild(content);
+		if(linkAnalyzer.statistics.linkSkipped.length > 0){
+			let line = document.createElement("p");
+			
+			line.appendChild(generateIcon("muted", "Skipped"));
 
-		line.appendChild(sup);
-		content = document.createTextNode(browser.i18n.getMessage("linksSkippedPopup"));
-		line.appendChild(content);
-		line.appendChild(document.createElement("BR"));
+			content = document.createTextNode(browser.i18n.getMessage("linksSkippedLabel") + ": " + linkAnalyzer.statistics.linkSkipped.length );
+			line.appendChild(content);
+			line.appendChild(document.createElement("BR"));
 
-		stats.appendChild(line);
-		/*
-		stats.innerHTML = "<h2 style=\"font-size: 20px; color: #000; font-weight: bold; text-decoration: underline; padding-bottom: 5px; margin-bottom: 5px;\">" + browser.i18n.getMessage("extensionName") + "</h2>" +
-						  "<p>" +
-						  "<sup style=\"color: #666666; font-size: 10px\">1</sup> " + browser.i18n.getMessage('linksFineLabel') + ": " + linkAnalyzer.statistics.linkFine.length 	+ "<br />" +
-						  "<sup style=\"color: #666666; font-size: 10px\">2</sup> " + browser.i18n.getMessage("linksBrokenLabel") + ": " + linkAnalyzer.statistics.linkBroken.length 	+ "<br />" +
-						  "<sup style=\"color: #666666; font-size: 10px\">3</sup> " + browser.i18n.getMessage("linksTimeOutLabel") + ": " + linkAnalyzer.statistics.linkTimeOut.length + "<br />" +
-						  "<sup style=\"color: #666666; font-size: 10px\">4</sup> " + browser.i18n.getMessage("linksInvalidLabel") + ": " + linkAnalyzer.statistics.linkInvalid.length  + "<br />" +
-						  "<sup style=\"color: #666666; font-size: 10px\">5</sup> " + browser.i18n.getMessage("linksSkippedLabel") + ": " + linkAnalyzer.statistics.linkSkipped.length 	+ "</p>" +
-						  "<p>" + browser.i18n.getMessage("testDuration") + ": " + linkAnalyzer.statistics.diff + " " + browser.i18n.getMessage("seconds") + "</p>";
-
-						  // let's explain what is what
-		stats.innerHTML += "<p style=\"color: #666666; font-size: 10px\">" +
-						   "<sup>1</sup> " + browser.i18n.getMessage("linksFinePopup") + "<br />" +
-						   "<sup>2</sup> " + browser.i18n.getMessage("linksBrokenPopup") + "<br />" +
-						   "<sup>3</sup> " + browser.i18n.getMessage("linksTimeOutPopup").replace("{secondsTimeOut}", linkAnalyzer.pref.secondsTimeOut) + "<br />" +
-						   "<sup>4</sup> " + browser.i18n.getMessage("linksInvalidPopup") + "<br />" + 
-						   "<sup>5</sup> " + browser.i18n.getMessage("linksSkippedPopup") + "<br /></p>";
-*/						   
-		// show broken link if exists
-		if (linkAnalyzer.statistics.linkBroken.length > 0) {		
-			//stats.innerHTML += "<h2 style=\"font-size: 20px; color: #000; font-weight: bold; text-decoration: underline; padding-bottom: 5px; margin-bottom: 5px;\">" + browser.i18n.getMessage("linksBrokenLabel") + "</h2><p>";
-			styleH2 = "color: #000; font-weight: bold; padding-bottom: 5px; margin-bottom: 5px;";
-			element = document.createElement("H2");
-			element.style.cssText = styleH2
-			content = document.createTextNode(browser.i18n.getMessage("linksBrokenLabel"));
-			element.appendChild(content);
-
-			stats.appendChild(element);
-
-			line = document.createElement("P");
-			// loop through each of the broken links
-			for (var i = 0; i < linkAnalyzer.statistics.linkBroken.length; i++) {			
-				content = document.createTextNode((linkAnalyzer.statistics.linkBroken[i].innerHTML || linkAnalyzer.attr (linkAnalyzer.statistics.linkBroken[i], "alt")).replace("<", "&lt;").replace(">", "&gt;"));
-				line.appendChild(content);
-				line.appendChild(document.createElement("BR"));
-			}
-			//stats.innerHTML += "</p>";
+			line.appendChild(generateItemForLegend("linksSkippedPopup"));
+			line.appendChild(document.createElement("BR"));
+			
 			stats.appendChild(line);
+		}
+
+		// Test duration
+		/*let testDuration = document.createElement("P");
+		content = document.createTextNode(browser.i18n.getMessage("testDuration") + ": " + linkAnalyzer.statistics.diff + " " + browser.i18n.getMessage("seconds"));
+		testDuration.appendChild(content);
+
+		stats.appendChild(testDuration);*/
+   
+		// Conclusion finish
+		if(!conclusionIconSet){
+			//content = document.createTextNode("Everything good!");
+			//conclusionElement.appendChild(content);
+			//conclusionElement.appendChild(generateIcon("cool", "Fine", conclusionIconSize));
+			conclusionElement.appendChild(generateIcon("monkey", browser.i18n.getMessage("conclusionFine"), "180px"));
+			conclusionIconSet = true;
+		}
+		stats.appendChild(conclusionElement);
+		
+
+		// Show broken link if exists
+		if (linkAnalyzer.statistics.linkBroken.length > 0) {		
+			let h2brokenLinks = document.createElement("H2");
+			h2brokenLinks.style.cssText = styleH2brokenLinks;
+			content = document.createTextNode(browser.i18n.getMessage("linksBrokenLabel"));
+			h2brokenLinks.appendChild(content);
+
+			stats.appendChild(h2brokenLinks);
+
+			let brokenLinks = document.createElement("P");
+			// loop through each of the broken links
+			for (let linkBroken of linkAnalyzer.statistics.linkBroken) {			
+				content = document.createTextNode(linkBroken.getAttribute("data-statuscode") + " ");
+				brokenLinks.appendChild(content);
+				
+				let link = document.createElement("a");
+				link.href = linkBroken.href;
+				link.target = "_blank";
+				content = document.createTextNode(linkBroken.href);
+				link.appendChild(content);
+				brokenLinks.appendChild(link);
+
+				content = document.createTextNode(" " + (linkBroken.innerHTML || linkAnalyzer.attr (linkBroken, "alt")).replace("<", "&lt;").replace(">", "&gt;"));
+				brokenLinks.appendChild(content);
+
+				//brokenLinks.appendChild(linkBroken);
+				brokenLinks.appendChild(document.createElement("BR"));
+			}
+			
+			stats.appendChild(brokenLinks);
 		}
 		
 		if(linkAnalyzer.statistics.linkBroken.length > 0 || linkAnalyzer.statistics.linkInvalid.length > 0 || linkAnalyzer.statistics.linkTimeOut.length > 0){
@@ -764,7 +794,7 @@ linkAnalyzer.popup = {
 				setTimeout(function(){
 					overlay.click();
 				}, linkAnalyzer.pref.hideStatsAfter * 1000);
-			}			
+			}
 		}else{
 			return; // don't show popup
 		}
@@ -773,9 +803,9 @@ linkAnalyzer.popup = {
 	// following 2 functions are from John Resig : Pro JavaScript techniques . Awesome book btw ! :)
 	// I just modified them a little to be completely stand-alone and to fit this extension
 	fadeIn: function ( elem, to, speed ) {
-    	for ( var i = 0; i <= 100; i += 5 ) {
+    	for ( let i = 0; i <= 100; i += 5 ) {
         	(function(){
-        		var opacity = i;
+        		let opacity = i;
         		setTimeout(function(){
 					elem.style.opacity = (( opacity / 100 ) * to) / 100;
             	}, ( i + 1 ) * speed );
@@ -784,9 +814,9 @@ linkAnalyzer.popup = {
 	},	
 
 	fadeOut: function ( elem, to, speed ) {
-		for ( var i = 0; i < 60; i += 5 ) {
+		for ( let i = 0; i < 60; i += 5 ) {
 			(function() {
-				var opacity = i;
+				let opacity = i;
 				setTimeout(function() {
 					elem.style.opacity = (elem, 60 - opacity) / 100;
 					if ( opacity == 55 )
@@ -800,8 +830,8 @@ linkAnalyzer.popup = {
 		// take the maximum viewable height, to also dim the part we don't currently see
 
 		// https://stackoverflow.com/questions/1145850/how-to-get-height-of-entire-document-with-javascript
-		var body = document.body;
-		var html = document.documentElement;
+		let body = document.body;
+		let html = document.documentElement;
 
 		return Math.max( body.scrollHeight, body.offsetHeight,
                        html.clientHeight, html.scrollHeight, html.offsetHeight );
@@ -810,8 +840,8 @@ linkAnalyzer.popup = {
 	getWidth: function() {
 		// take the maximum viewable width, to also dim the part we don't currently see
 
-		var body = document.body;
-		var html = document.documentElement;
+		let body = document.body;
+		let html = document.documentElement;
 
 		return Math.max( body.scrollWidth, body.offsetWidth,
                        html.clientWidth, html.scrollWidth, html.offsetWidth );
@@ -831,47 +861,51 @@ browser.runtime.onMessage.addListener(request => {
 		anchor: request.anchor,
 		option: request.option,
 		area: request.area,
-		hintsToRecognize: request.hintsToRecognize };
+		hintsToRecognize: request.hintsToRecognize
+	};
 
 	if (request.scope == "page") {
-		linkAnalyzer.check();
+		linkAnalyzer.check("page");
 	} else if (request.scope == "selection") {
 		linkAnalyzer.check("selection");
 	} else if (request.scope == "link") {
-		linkAnalyzer.check(null, "link", request.infoLinkUrl);
+		linkAnalyzer.check("link", request.infoLinkUrl);
 	}
   
-  return Promise.resolve({response: "Rematou de comprobar"});
+	//return Promise.resolve({response: "Rematou de comprobar"});
 });
 
 // https://stackoverflow.com/questions/10473745/compare-strings-javascript-return-of-likely
 function similarity(s1, s2) {
-  var longer = s1;
-  var shorter = s2;
-  if (s1.length < s2.length) {
-    longer = s2;
-    shorter = s1;
-  }
-  var longerLength = longer.length;
-  if (longerLength == 0) {
-    return 1.0;
-  }
-  return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength);
+	let longer = s1;
+	let shorter = s2;
+	
+	if (s1.length < s2.length) {
+		longer = s2;
+		shorter = s1;
+	}
+	
+	let longerLength = longer.length;
+	if (longerLength == 0) {
+		return 1.0;
+	}
+	
+	return (longerLength - editDistance(longer, shorter)) / parseFloat(longerLength);
 }
 
 function editDistance(s1, s2) {
   s1 = s1.toLowerCase();
   s2 = s2.toLowerCase();
 
-  var costs = new Array();
-  for (var i = 0; i <= s1.length; i++) {
-    var lastValue = i;
-    for (var j = 0; j <= s2.length; j++) {
+  let costs = new Array();
+  for (let i = 0; i <= s1.length; i++) {
+    let lastValue = i;
+    for (let j = 0; j <= s2.length; j++) {
       if (i == 0)
         costs[j] = j;
       else {
         if (j > 0) {
-          var newValue = costs[j - 1];
+          let newValue = costs[j - 1];
           if (s1.charAt(i - 1) != s2.charAt(j - 1))
             newValue = Math.min(Math.min(newValue, lastValue),
               costs[j]) + 1;
