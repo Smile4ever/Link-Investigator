@@ -41,7 +41,7 @@ In the overview window:
 * The overview window is off by default, but can be enabled on the options page
 
 ## Detection of dead links
-###Indicators
+### Indicators
 Aside from the HTTP status code, a few other indicators are used to mark a page as invalid:
 * the response returned is empty for websites configured to use GET requests. (note: HEAD requests are always empty so that's expected behaviour). Link Investigator uses HEAD requests by default. ("empty response using GET")
 * the responseUrl contains "404" or "error" ("responseURL indicates 404")
