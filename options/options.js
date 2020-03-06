@@ -16,3 +16,10 @@ S.initOptionsPage().then(function () {
 function save() {
     S.saveOptionsPage();
 }
+
+async function init(){
+    let versionNumber = browser.runtime.getManifest().version;
+    document.querySelector("#version").innerHTML = versionNumber;
+}
+
+window.addEventListener("DOMContentLoaded", init, { passive: true });

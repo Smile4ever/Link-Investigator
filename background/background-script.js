@@ -10,7 +10,7 @@ const defaultSettings = {
 	linkTimeOut: "#FFCC99",
 	linkSkipped: "#CCCCCC",
 	linkInvalid: "#999900",
-	secondsTimeOut: 45,
+	secondsTimeOut: 15,
 	showStats: false,
 	hideStatsAfter: 0,
 	anchor: true,

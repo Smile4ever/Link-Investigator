@@ -1,5 +1,4 @@
 # Link Investigator
-
 Investigates the HTTP status of links in a webpage, selection or link. Based on https://github.com/damufo/link-analyzer
 
 ## Features
@@ -59,7 +58,7 @@ Some links are not checked, these include JavaScript URLs by default, and links 
 * Recommended "skip links containing":
   - ~logoff,~logout,~signoff
 * My personal "skip links containing" (for use with Wikipedia):
-  - ~logoff,~logout,~signoff,google,archive.is,archive.today,web.archive.org,Speciaal,manageurlsingle
+  - ~logoff,~logout,~signoff,google,archive.is,archive.today,web.archive.org,Speciaal,manageurlsingle,nl.wikipedia.org,tools.wmflabs.org/geohack,commons.wikimedia.org,toggle_view_mobile,Zeusmodus:Preferences
 
 ### Notes about the link context
 The "link" context doesn't know which link you clicked, only the URL that was associated with that link. As such, it can happen that multiple elements on the page with the same URL are highlighted while you expect only one element to be highlighted.

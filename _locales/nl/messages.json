@@ -10,21 +10,21 @@
 	"informationLabel": { "message": "Informatie" },
 	"generalLabel": { "message": "Algemeen" },
 
-	"showStatsLabel": { "message": "Toon statistieken na onderzoek" },
-	"showStatsCaptionLabel": { "message": "Wanneer het onderzoek afgelopen is, toon dan een pop-upvenster met de resultaten van het onderzoek" },
+	"showStatsLabel": { "message": "Toon statistieken pop-up na onderzoek" },
+	"showStatsCaptionLabel": { "message": "Open een pop-upvenster met statistieken en resultaten zodra het onderzoek beëindigd is." },
 	"hideStatsAfterLabel": { "message": "Verberg statistieken automatisch" },
 	"hideStatsAfterCaptionLabel": { "message": "Verberg de statistieken na een bepaalde tijd in seconden. Gebruik 0 om deze instelling uit te schakelen." },
 	"highlightedLinksLabel": { "message": "Markeren van onderzochte links" },
 	"linksFineLabel": { "message": "Werkende links" },
-	"linksFineCaptionLabel": { "message": "Markeerkleur voor links die werken." },
+	"linksFineCaptionLabel": { "message": "Kleur voor links die werken." },
 	"linksBrokenLabel": { "message": "Dode links" },
-	"linksBrokenCaptionLabel": { "message": "Markeerkleur voor links die dood zijn." },
+	"linksBrokenCaptionLabel": { "message": "Kleur voor links die dood zijn." },
 	"linksTimeOutLabel": { "message": "Tijdslimietoverschrijdende links" },
-	"linksTimeOutCaptionLabel": { "message": "Markeerkleur voor links die de tijdslimiet om te openen hebben overschreden" },
+	"linksTimeOutCaptionLabel": { "message": "Kleur voor links die niet geopend konden worden voordat de maximale tijdslimiet verstreek." },
 	"linksSkippedLabel": { "message": "Overgeslagen links" },
-	"linksSkippedCaptionLabel": { "message": "Markeerkleur voor links die niet werden onderzocht" },
+	"linksSkippedCaptionLabel": { "message": "Kleur voor links die niet werden onderzocht." },
 	"linksInvalidLabel": { "message": "Ongeldige links" },
-	"linksInvalidCaptionLabel": { "message": "Markeerkleur voor links die een header terugstuurden die geen HTTP/HTTPS-header was"},
+	"linksInvalidCaptionLabel": { "message": "Kleur voor links die een ongeldige header terugstuurden."},
 	"secondsTimeOutLabel": { "message": "Tijdslimiet (in seconden)" },
 	"secondsTimeOutCaptionLabel": { "message": "De tijdslimiet om een link te laden" },
 
@@ -33,7 +33,7 @@
 	"anchorLabel": { "message": "A-tag" },
 	"optionLabel": { "message": "Option-tag" },
 	"areaLabel": { "message": "Area-tag" },
-	"hintsToRecognizeLabel": { "message": "Geen links onderzoeken die het volgende bevatten" },
+	"hintsToRecognizeLabel": { "message": "Uitzonderingslijst. Geen links onderzoeken die het volgende bevatten" },
 	"hintsToRecognizeCaptionLabel": { "message": "Gescheiden door ','" },
 
 	"versionLabel": { "message": "Versie" },
@@ -43,7 +43,7 @@
 	"donationCaptionLabel": { "message": "Bedankt voor het gebruiken van Link Investigator.<br>Je steun zal een grote aanmoediging zijn voor het verder ontwikkelen van deze add-on.<br>Als je Link Investigator leuk vindt zou het leuk zijn als je overwoog een donatie te doen." },
 	"addonPageLabel": { "message": "Add-on pagina" },
 	"addonUrl": {
-		 "message": "https:\/\/addons.mozilla.org\/firefox\/addon\/link-investigator\/?src=optionpage"
+		 "message": "https:\/\/addons.mozilla.org\/nl\/firefox\/addon\/link-investigator\/?src=optionpage"
 	 },
 	"errorCheck": { "message": "Link Investigator is gefaald" },
 	"about": { "message": "Over" },
@@ -53,10 +53,10 @@
 
 	"testDuration": { "message": "Onderzoekstijd" },
 	"linksFinePopup": { "message": "De link stuurde een statuscode tussen 200 en 299 terug wat betekent dat de link ok is." },
-	"linksBrokenPopup": { "message": "De link heeft statuscode 404 of soortgelijk teruggestuurd, waardoor deze pagina niet bereikt kon worden" },
-	"linksTimeOutPopup": { "message": "De link heeft {secondsTimeOut} seconden om te laten, maar slaagde er niet in om op tijd te laden." },
-	"linksInvalidPopup": { "message": "Deze link heeft geen geldige headers teruggestuurd. Ofwel is de server down ofwel stuurt het door naar een ongeldige protocol." },
-	"linksSkippedPopup": { "message": "Deze link werd overgeslagen. Het is mogelijk een link naar een sectie van een pagina (#) of JavaScript." },
+	"linksBrokenPopup": { "message": "De link heeft statuscode 404 of soortgelijk teruggestuurd, wat betekent dat deze pagina als dood beschouwd wordt" },
+	"linksTimeOutPopup": { "message": "De server heeft na {secondsTimeOut} seconden niet geantwoord." },
+	"linksInvalidPopup": { "message": "De server heeft geen geldige headers doorgestuurd. De server staat af of is onbereikbaar door netwerkproblemen." },
+	"linksSkippedPopup": { "message": "Deze link werd overgeslagen. Deze link staat mogelijk op de uitzonderingslijst, het is een link naar een sectie (#) of het is een JavaScript-link." },
 	"conclusionFine": { "message": "Elke gecontroleerde link was levend" },
 
 	"browserButtonTitle": { "message": "Link Investigator - Klik om de huidige pagina te controleren" },

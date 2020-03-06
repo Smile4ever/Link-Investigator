@@ -1,3 +1,12 @@
+1.3.0 (2020-03-06)
+==================
+* Statistics popup:
+** Add a section for invalid and timed out links when found
+* Set default timeout to 15 seconds instead of 45 seconds
+* Automatically retrieve addon version for options page
+* Expand README with more personal rules for the exclude list
+* Rephrase some options
+
 1.2.0 (2020-03-04)
 ==================
 * Rework statistics popup:

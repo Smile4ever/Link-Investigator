@@ -756,39 +756,72 @@ linkAnalyzer.popup = {
 		}
 		stats.appendChild(conclusionElement);
 		
+		let generateSectionTitleOfLinks = function(messageId){
+			let h2InvalidOrBrokenLinksTitle = document.createElement("H2");
 
-		// Show broken link if exists
-		if (linkAnalyzer.statistics.linkBroken.length > 0) {		
-			let h2brokenLinks = document.createElement("H2");
-			h2brokenLinks.style.cssText = styleH2brokenLinks;
-			content = document.createTextNode(browser.i18n.getMessage("linksBrokenLabel"));
-			h2brokenLinks.appendChild(content);
+			h2InvalidOrBrokenLinksTitle.style.cssText = styleH2brokenLinks;
+			content = document.createTextNode(browser.i18n.getMessage(messageId));
+			h2InvalidOrBrokenLinksTitle.appendChild(content);
 
-			stats.appendChild(h2brokenLinks);
+			return h2InvalidOrBrokenLinksTitle;
+		}
 
-			let brokenLinks = document.createElement("P");
-			// loop through each of the broken links
-			for (let linkBroken of linkAnalyzer.statistics.linkBroken) {			
-				content = document.createTextNode(linkBroken.getAttribute("data-statuscode") + " ");
-				brokenLinks.appendChild(content);
-				
-				let link = document.createElement("a");
-				link.href = linkBroken.href;
-				link.target = "_blank";
-				content = document.createTextNode(linkBroken.href);
-				link.appendChild(content);
-				brokenLinks.appendChild(link);
+		let getStatusCodeOrNothing = function(linkInvalidOrBroken){
+			let statusCode = linkInvalidOrBroken.getAttribute("data-statuscode");
+			if(statusCode == 0){
+				return "  0 ";
+			}
 
-				content = document.createTextNode(" " + (linkBroken.innerHTML || linkAnalyzer.attr (linkBroken, "alt")).replace("<", "&lt;").replace(">", "&gt;"));
-				brokenLinks.appendChild(content);
-
-				//brokenLinks.appendChild(linkBroken);
-				brokenLinks.appendChild(document.createElement("BR"));
+			if(statusCode+"" == "undefined" || statusCode+"" == "null"){
+				return "   ";
 			}
 			
-			stats.appendChild(brokenLinks);
+			return statusCode + " ";
 		}
-		
+
+		let generateSectionOfLinks = function(invalidOrBrokenLinks){
+			let invalidOrBrokenLinksSection = document.createElement("P");
+
+			// loop through each of the broken links
+			for (let linkInvalidOrBroken of invalidOrBrokenLinks) {			
+				content = document.createTextNode(getStatusCodeOrNothing(linkInvalidOrBroken));
+				invalidOrBrokenLinksSection.appendChild(content);
+				
+				let link = document.createElement("a");
+				link.href = linkInvalidOrBroken.href;
+				link.target = "_blank";
+				content = document.createTextNode(linkInvalidOrBroken.href);
+				link.appendChild(content);
+				invalidOrBrokenLinksSection.appendChild(link);
+
+				content = document.createTextNode(" " + (linkInvalidOrBroken.innerHTML || linkAnalyzer.attr (linkInvalidOrBroken, "alt")).replace("<", "&lt;").replace(">", "&gt;"));
+				invalidOrBrokenLinksSection.appendChild(content);
+
+				//brokenLinks.appendChild(linkInvalidOrBroken);
+				invalidOrBrokenLinksSection.appendChild(document.createElement("BR"));
+			}
+
+			return invalidOrBrokenLinksSection;
+		}
+
+		// Show broken links
+		if (linkAnalyzer.statistics.linkBroken.length > 0) {		
+			stats.appendChild(generateSectionTitleOfLinks("linksBrokenLabel"));
+			stats.appendChild(generateSectionOfLinks(linkAnalyzer.statistics.linkBroken));
+		}
+
+		// Show timed out links
+		if (linkAnalyzer.statistics.linkTimeOut.length > 0) {		
+			stats.appendChild(generateSectionTitleOfLinks("linksTimeOutLabel"));
+			stats.appendChild(generateSectionOfLinks(linkAnalyzer.statistics.linkTimeOut));
+		}
+
+		// Show invalid links
+		if (linkAnalyzer.statistics.linkInvalid.length > 0) {		
+			stats.appendChild(generateSectionTitleOfLinks("linksInvalidLabel"));
+			stats.appendChild(generateSectionOfLinks(linkAnalyzer.statistics.linkInvalid));
+		}
+
 		if(linkAnalyzer.statistics.linkBroken.length > 0 || linkAnalyzer.statistics.linkInvalid.length > 0 || linkAnalyzer.statistics.linkTimeOut.length > 0){
 			if(linkAnalyzer.pref.hideStatsAfter != 0 && linkAnalyzer.pref.hideStatsAfter != undefined){
 				setTimeout(function(){

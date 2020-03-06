@@ -10,7 +10,7 @@
 	"informationLabel": { "message": "Information" },
 	"generalLabel": { "message": "General" },
 
-	"showStatsLabel": { "message": "Show statistics after analysis" },
+	"showStatsLabel": { "message": "Show statistics pop-up after analysis" },
 	"showStatsCaptionLabel": { "message": "When finished, open a popup window with the results of the analysis. The popup is shown only when there is one of these categories detected: broken, invalid or timeout." },
 	"hideStatsAfterLabel": { "message": "Hide statistics automatically" },
 	"hideStatsAfterCaptionLabel": { "message": "Hide statistics after a defined amount of seconds. Use 0 to disable this setting." },
@@ -20,11 +20,11 @@
 	"linksBrokenLabel": { "message": "Broken links" },
 	"linksBrokenCaptionLabel": { "message": "Color to highlight broken links." },
 	"linksTimeOutLabel": { "message": "Timed out links" },
-	"linksTimeOutCaptionLabel": { "message": "Color to highlight links that didn't return any headers for a long time" },
+	"linksTimeOutCaptionLabel": { "message": "Color to highlight links that didn't open before the maximum time limit was reached." },
 	"linksSkippedLabel": { "message": "Skipped links" },
-	"linksSkippedCaptionLabel": { "message": "Highlight color for links that weren't analyzed" },
+	"linksSkippedCaptionLabel": { "message": "Highlight color for links that weren't analyzed." },
 	"linksInvalidLabel": { "message": "Invalid links" },
-	"linksInvalidCaptionLabel": { "message": "Highlight color for links that returned header, but it wasn't http/https header"},
+	"linksInvalidCaptionLabel": { "message": "Highlight color for links that returned an invalid header."},
 	"secondsTimeOutLabel": { "message": "Time-out (in seconds)" },
 	"secondsTimeOutCaptionLabel": { "message": "Links that take longer than the defined threshold are being considered as timed out" },
 
@@ -33,7 +33,7 @@
 	"anchorLabel": { "message": "Anchor" },
 	"optionLabel": { "message": "Option" },
 	"areaLabel": { "message": "Area" },
-	"hintsToRecognizeLabel": { "message": "Skip links containing" },
+	"hintsToRecognizeLabel": { "message": "Exclude list. Skip links containing" },
 	"hintsToRecognizeCaptionLabel": { "message": "Separate by ','" },
 
 	"versionLabel": { "message": "Version" },
@@ -56,7 +56,7 @@
 	"linksBrokenPopup": { "message": "The returned status code was either 404 or some other status code considered to be invalid." },
 	"linksTimeOutPopup": { "message": "The server did not reply after {secondsTimeOut} seconds." },
 	"linksInvalidPopup": { "message": "The server didn't return any valid header. The server is down or unreachable due to network conditions." },
-	"linksSkippedPopup": { "message": "The link wasn't tested because either it's excluded by the exclude list, it's an anchor to this page (#) or it's a JavaScript link." },
+	"linksSkippedPopup": { "message": "The link wasn't tested because either it's excluded by the exclude list, it's an anchor to a page section (#) or it's a JavaScript link." },
 	"conclusionFine": { "message": "Every checked link was fine" },
 
 	"browserButtonTitle": { "message": "Link Investigator - Click to check the current page" },
